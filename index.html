@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEET CBT 2027 — Free NTA Computer-Based Test Simulator &amp; Practice App</title>
+<meta name="description" content="NEET UG goes computer-based in 2027. Practice on a free, offline simulator that replicates the exact NTA CBT interface — question palette, mark for review, timer, auto-submit. Works on phone and laptop. Import your own PYQ banks.">
+<meta name="keywords" content="NEET 2027, NEET CBT, NEET computer based test, NTA CBT simulator, NEET practice app, NEET mock test, NEET UG 2027, mark for review, NTA interface">
+<meta name="author" content="Akash Priyadarshi">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://akashpriyadarshii.github.io/neet-cbt-site/">
+<meta name="theme-color" content="#1a56db">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://akashpriyadarshii.github.io/neet-cbt-site/">
+<meta property="og:title" content="NEET CBT 2027 Simulator — Free NTA-Style Practice App">
+<meta property="og:description" content="NEET goes computer-based in 2027. Practice on a free offline simulator that replicates the exact NTA CBT interface — question palette, mark for review, timer, auto-submit. Import your own PYQs.">
+<meta property="og:image" content="https://akashpriyadarshii.github.io/neet-cbt-site/og-cover.png">
+<meta property="og:locale" content="en_IN">
+<meta property="og:site_name" content="NEET CBT 2027 Simulator">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NEET CBT 2027 Simulator — Free NTA-Style Practice App">
+<meta name="twitter:description" content="Practice the exact NTA CBT interface for NEET 2027. Free, offline, phone + laptop. Import your own PYQs.">
+<meta name="twitter:image" content="https://akashpriyadarshii.github.io/neet-cbt-site/og-cover.png">
+
+<style>
+:root{
+  --navy:#1a2b4a;
+  --blue:#1a56db;
+  --blue-deep:#123c96;
+  --accent:#e8b23a;
+  --ink:#16233d;
+  --paper:#f4f6fa;
+  --white:#ffffff;
+  --line:#dbe3ef;
+  --green:#15803d;
+  --radius:10px;
+  --shadow:0 10px 30px rgba(22,35,61,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--ink);background:var(--white);line-height:1.6;
+}
+a{color:var(--blue);text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* header — gov-style top bar */
+.topbar{background:var(--navy);color:#fff;font-size:.78rem;letter-spacing:.04em;padding:.45rem 0}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar span{opacity:.85}
+.topbar a{color:#fff;border-bottom:1px dotted rgba(255,255,255,.5)}
+.topbar a:hover{border-bottom-color:#fff}
+
+header.main{background:var(--navy);color:#fff;padding:1.2rem 0;border-bottom:4px solid var(--accent)}
+header.main .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.15rem;letter-spacing:.02em}
+.crest{width:42px;height:42px;border-radius:50%;background:var(--accent);color:var(--navy);
+  display:grid;place-items:center;font-weight:900;font-size:1.15rem;box-shadow:inset 0 0 0 3px var(--navy),inset 0 0 0 4.5px var(--accent);}
+.brand small{display:block;font-weight:400;font-size:.68rem;opacity:.7;letter-spacing:.08em;text-transform:uppercase}
+nav ul{display:flex;gap:22px;list-style:none;font-size:.92rem}
+nav a{color:#fff;opacity:.9;font-weight:600}
+nav a:hover{opacity:1;color:var(--accent)}
+
+/* hero */
+.hero{background:linear-gradient(180deg,var(--navy) 0%,#20345c 100%);color:#fff;padding:64px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.eyebrow{display:inline-block;background:var(--accent);color:var(--navy);font-weight:800;font-size:.72rem;
+  letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;border-radius:4px;margin-bottom:18px}
+.hero h1{font-size:clamp(1.9rem,4vw,3rem);line-height:1.12;margin-bottom:18px;font-weight:800}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{font-size:1.08rem;opacity:.92;margin-bottom:26px;max-width:34em}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;padding:.85rem 1.6rem;border-radius:8px;font-weight:800;font-size:1rem;transition:.15s}
+.btn.primary{background:var(--accent);color:var(--navy)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,178,58,.35)}
+.btn.ghost{border:2px solid rgba(255,255,255,.55);color:#fff}
+.btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.hero-note{font-size:.8rem;opacity:.6;margin-top:14px}
+.hero-badge{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px}
+.badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:.7rem;text-align:center}
+.badge b{display:block;font-size:1.15rem;color:var(--accent)}
+.badge span{font-size:.72rem;opacity:.8}
+
+/* demo mock */
+.mock{background:var(--paper);border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.mock-head{background:var(--navy);color:#fff;padding:.5rem .9rem;display:flex;gap:6px;align-items:center;font-size:.7rem;letter-spacing:.06em}
+.mock-head i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.mock-head i:nth-child(1){background:#f87171}
+.mock-head i:nth-child(2){background:#fbbf24}
+.mock-head i:nth-child(3){background:#34d399}
+.mock-body{position:relative;background:linear-gradient(180deg,#eef2f8,var(--paper))}
+.mock-top{display:flex;justify-content:space-between;padding:12px 14px;font-size:.78rem;font-weight:700;color:var(--navy)}
+.mock-top .timer{background:var(--accent);color:var(--navy);border-radius:4px;padding:.1rem .5rem}
+.mock-q{padding:10px 14px 6px}
+.q-num{font-size:.72rem;color:var(--blue);font-weight:800}
+.mock-q p{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:.86rem;margin-top:6px;box-shadow:0 2px 6px rgba(22,35,61,.04)}
+.mock-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 14px}
+.opt{border:1px solid var(--line);border-radius:8px;background:#fff;padding:.55rem .7rem;font-size:.78rem;display:flex;align-items:center;gap:8px}
+.opt b{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.62rem;color:var(--ink)}
+.opt.sel{border-color:var(--blue)}
+.opt.sel b{border-color:var(--blue);color:#fff;background:var(--blue)}
+.mock-foot{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-top:1px solid var(--line);background:#fff}
+.palette{display:flex;gap:4px}
+.pal{width:22px;height:22px;border-radius:4px;border:1px solid var(--line);font-size:.6rem;display:grid;place-items:center;font-weight:700}
+.pal.answered{background:var(--green);color:#fff;border-color:var(--green)}
+.pal.marked{background:var(--accent);color:var(--navy);border-color:var(--accent)}
+.mock-foot .btn{font-size:.75rem;padding:.4rem .9rem}
+
+/* sections */
+section{padding:64px 0}
+section.alt{background:var(--paper)}
+.sec-head{max-width:640px;margin-bottom:40px}
+.sec-head .kicker{color:var(--blue);font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;margin-bottom:8px}
+.sec-head h2{font-size:clamp(1.5rem,3vw,2.1rem);color:var(--navy);line-height:1.2;margin-bottom:10px}
+.sec-head p{opacity:.85}
+
+/* why 2027 */
+.timeline{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.card .num{width:38px;height:38px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:14px}
+.card h3{color:var(--navy);margin-bottom:8px;font-size:1.05rem}
+.card p{font-size:.92rem;opacity:.85}
+
+/* features */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:.15s}
+.feat:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(22,35,61,.12)}
+.feat .ico{width:46px;height:46px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:1.3rem;margin-bottom:14px}
+.feat h3{font-size:1rem;color:var(--navy);margin-bottom:6px}
+.feat p{font-size:.86rem;opacity:.85}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.step{text-align:center;padding:20px 12px}
+.step .n{width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--navy);font-weight:900;font-size:1.3rem;display:grid;place-items:center;margin:0 auto 14px}
+.step h3{color:var(--navy);margin-bottom:6px}
+.step p{font-size:.88rem;opacity:.8;max-width:260px;margin:0 auto}
+
+/* screenshot */
+.shot{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.shot img{width:100%}
+.cap{font-size:.8rem;opacity:.7;text-align:center;padding:.8rem}
+
+/* faq */
+.faq{max-width:760px;margin:0 auto}
+details{border:1px solid var(--line);border-radius:8px;margin-bottom:12px;background:#fff;overflow:hidden}
+summary{cursor:pointer;padding:16px 20px;font-weight:700;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.3rem;color:var(--blue);font-weight:800}
+details[open] summary::after{content:"–"}
+details p{padding:0 20px 16px;font-size:.92rem;opacity:.88}
+
+/* footer */
+footer{background:var(--navy);color:#cfd8e8;padding:40px 0 48px;font-size:.85rem}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+footer h4{color:#fff;font-size:.95rem;margin-bottom:10px}
+footer ul{list-style:none;display:grid;gap:6px}
+footer a{color:#cfd8e8}
+footer a:hover{color:var(--accent)}
+.disclaimer{margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);font-size:.74rem;opacity:.75;line-height:1.5}
+
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr;gap:36px}
+  .feats,.steps,.timeline{grid-template-columns:1fr}
+  .hero-badge{grid-template-columns:repeat(3,1fr)}
+  nav ul{gap:12px;font-size:.8rem}
+  footer .wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- top bar -->
+<div class="topbar">
+  <div class="wrap">
+    <span>NEET UG · Computer-Based Test (CBT) begins 2027</span>
+    <span><a href="https://neet-cbt.vercel.app/">Launch Simulator →</a></span>
+  </div>
+</div>
+
+<header class="main">
+  <div class="wrap">
+    <div class="brand">
+      <div class="crest">N</div>
+      <div>NEET CBT 2027<small>Simulator · Free · Offline</small></div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#why">Why 2027</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- hero -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Free · Open Source · No Account</span>
+      <h1>NEET goes <em>computer-based</em> in 2027. Practice the real interface — today.</h1>
+      <p class="lead">NEET UG is moving to a computer-based test from 2027. This free simulator replicates the exact NTA CBT interface — question palette, mark for review, on-screen timer, auto-submit — so nothing surprises you on exam day.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://neet-cbt.vercel.app/">Launch the Simulator →</a>
+        <a class="btn ghost" href="#why">Why the change?</a>
+      </div>
+      <p class="hero-note">Works offline after first visit · Phone &amp; laptop · Import your own PYQ banks</p>
+      <div class="hero-badge">
+        <div class="badge"><b>200+</b><span>Questions included</span></div>
+        <div class="badge"><b>100%</b><span>Offline-first</span></div>
+        <div class="badge"><b>₹0</b><span>Free forever</span></div>
+      </div>
+    </div>
+
+    <!-- mock UI -->
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head"><i></i><i></i><i></i>&nbsp;NEET CBT 2027 — Physics</div>
+      <div class="mock-body">
+        <div class="mock-top">
+          <span>Question 12 of 180</span>
+          <span class="timer">02:34:10</span>
+        </div>
+        <div class="mock-q">
+          <span class="q-num">Q.12</span>
+          <p>A stone is dropped from a height h. Its velocity just before striking the ground is…</p>
+        </div>
+        <div class="mock-opts">
+          <div class="opt sel"><b>A</b>√(2gh)</div>
+          <div class="opt"><b>B</b>√(gh)</div>
+          <div class="opt"><b>C</b>2√(gh)</div>
+          <div class="opt"><b>D</b>gh</div>
+        </div>
+        <div class="mock-foot">
+          <span class="palette">
+            <span class="pal answered">1</span><span class="pal answered">2</span><span class="pal marked">3</span><span class="pal">4</span><span class="pal">5</span>
+          </span>
+          <a class="btn primary" href="https://neet-cbt.vercel.app/">Try it free</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- why -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">The big shift</span>
+      <h2>OMR sheets are out. Screens are in.</h2>
+      <p>After the 2026 paper leaks, the government confirmed it: NEET UG moves to a computer-based test. Every topper is now practicing on-screen. You should too.</p>
+    </div>
+    <div class="timeline">
+      <div class="card">
+        <div class="num">1</div>
+        <h3>Paperless, randomized questions</h3>
+        <p>Question order and answer options are shuffled per candidate. Familiarity with the on-screen flow becomes a real advantage.</p>
+      </div>
+      <div class="card">
+        <div class="num">2</div>
+        <h3>Mark for review, on-screen timer</h3>
+        <p>The palette, the review system, the auto-submit countdown — all now happen inside the exam software. Practicing the interface is part of preparing.</p>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <h3>Multi-shift scheduling</h3>
+        <p>Multiple shifts across the day mean more seating, but also more variance. The simulator trains you to perform under any condition.</p>
+      </div>
+      <div class="card">
+        <div class="num">4</div>
+        <h3>Built to mirror NTA's software</h3>
+        <p>This simulator was built as an NTA-interface replica — down to the palette colors, the mark-for-review flow, and the auto-submit overlay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- features -->
+<section class="alt" id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Everything you need</span>
+      <h2>Built like the real exam. Better than a test series.</h2>
+    </div>
+    <div class="feats">
+      <div class="feat"><div class="ico">🎯</div><h3>Exact NTA interface</h3><p>Question palette, mark-for-review, save-and-next, auto-submit — a faithful replica of the exam software.</p></div>
+      <div class="feat"><div class="ico">⏱️</div><h3>On-screen timer</h3><p>Real 180-question countdown with a time-up overlay, so you learn to manage the clock under pressure.</p></div>
+      <div class="feat"><div class="ico">📱</div><h3>Phone + laptop</h3><p>Installable PWA. Works on any device, offline after first visit, no account required.</p></div>
+      <div class="feat"><div class="ico">📦</div><h3>Import your PYQs</h3><p>Bring your own previous-year question banks in a simple format. Practice what you actually need.</p></div>
+      <div class="feat"><div class="ico">🔒</div><h3>Private by design</h3><p>All data lives on your device. No accounts, no tracking, no uploads.</p></div>
+      <div class="feat"><div class="ico">🧠</div><h3>Exam-day simulation</h3><p>NTA-style pre-exam screens, candidate info panel, and the full flow — not just questions on a page.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- how -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Get started</span>
+      <h2>Three steps to your first mock</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Open the app</h3><p>Visit neet-cbt.vercel.app on your phone or laptop. No sign-up.</p></div>
+      <div class="step"><div class="n">2</div><h3>Pick a bank</h3><p>Start with the built-in questions or import your own PYQ bank.</p></div>
+      <div class="step"><div class="n">3</div><h3>Practice like exam day</h3><p>Mark questions for review, watch the timer, and learn the CBT flow.</p></div>
+    </div>
+    <div class="shot">
+      <img src="screenshot.png" alt="NEET CBT 2027 simulator showing the question palette, mark for review and timer during a mock test" width="1080" height="608">
+      <p class="cap">The simulator in action — question palette, mark-for-review, live timer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- faq -->
+<section class="alt" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">FAQ</span>
+      <h2>Common questions</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Is the NEET CBT simulator free?</summary>
+        <p>Yes. Completely free and open source (MIT). No account, no ads, no hidden costs — and it works offline after your first visit.</p>
+      </details>
+      <details>
+        <summary>Is this the official NTA test?</summary>
+        <p>No. This is an independent, free practice tool that replicates the NTA computer-based test interface. It is not affiliated with or endorsed by the NTA, NMC, or any government body.</p>
+      </details>
+      <details>
+        <summary>Does it work on my phone?</summary>
+        <p>Yes. It's a progressive web app (PWA) — install it to your home screen and it behaves like a native app. Works on Android, iPhone, and desktop browsers.</p>
+      </details>
+      <details>
+        <summary>Can I practice with my own questions?</summary>
+        <p>Yes. You can import your own question banks (including previous-year questions) in a simple supported format, then take them in the CBT interface.</p>
+      </details>
+      <details>
+        <summary>Does the 2027 NEET really become computer-based?</summary>
+        <p>Yes. Following the 2026 paper leaks, the Union Education Ministry confirmed NEET UG will move to a computer-based format from 2027, with randomized questions and multi-shift scheduling.</p>
+      </details>
+      <details>
+        <summary>How many questions does the simulator include?</summary>
+        <p>It ships with practice banks out of the box, and you can import as many additional banks as you like — including your own PYQ sets.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>NEET CBT 2027 Simulator</h4>
+      <p>A free, open-source practice app that replicates the NTA computer-based test interface for NEET UG 2027.</p>
+      <p style="margin-top:10px"><a href="https://neet-cbt.vercel.app/">Launch the simulator →</a></p>
+    </div>
+    <div>
+      <h4>Links</h4>
+      <ul>
+        <li><a href="#why">Why CBT 2027</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="https://github.com/AkashPriyadarshii/neet-cbt">Source code (GitHub)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap disclaimer">
+    NEET is a registered trademark of the National Testing Agency. This project is an independent educational tool and is not affiliated with, endorsed by, or sponsored by the NTA, NMC, or the Government of India. All practice questions and content are provided for educational purposes.
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "NEET CBT 2027 Simulator",
+  "url": "https://akashpriyadarshii.github.io/neet-cbt-site/",
+  "description": "Free offline NEET 2027 CBT simulator replicating the NTA computer-based test interface — question palette, mark for review, timer, auto-submit, custom question banks.",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "screenshot": "https://akashpriyadarshii.github.io/neet-cbt-site/screenshot.png",
+  "author": { "@type": "Person", "name": "Akash Priyadarshi" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is the NEET CBT simulator free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Completely free and open source (MIT). No account, no ads, no hidden costs — and it works offline after your first visit." } },
+    { "@type": "Question", "name": "Is this the official NTA test?", "acceptedAnswer": { "@type": "Answer", "text": "No. This is an independent, free practice tool that replicates the NTA computer-based test interface. It is not affiliated with or endorsed by the NTA, NMC, or any government body." } },
+    { "@type": "Question", "name": "Does it work on my phone?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It's a progressive web app (PWA). Install it to your home screen and it behaves like a native app. Works on Android, iPhone, and desktop browsers." } },
+    { "@type": "Question", "name": "Can I practice with my own questions?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can import your own question banks, including previous-year questions, in a simple supported format." } },
+    { "@type": "Question", "name": "Does the 2027 NEET really become computer-based?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Following the 2026 paper leaks, the Union Education Ministry confirmed NEET UG will move to a computer-based format from 2027, with randomized questions and multi-shift scheduling." } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://akashpriyadarshii.github.io/neet-cbt-site/" },
+    { "@type": "ListItem", "position": 2, "name": "NEET CBT 2027 Simulator", "item": "https://neet-cbt.vercel.app/" }
+  ]
+}
+</script>
+</body>
+</html>
