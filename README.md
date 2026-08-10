@@ -7,11 +7,11 @@ Hosted on GitHub Pages: https://akashpriyadarshii.github.io/neet-cbt-site/
 ## Files
 
 - `index.html` — single-file marketing page (no build step)
-- `screenshot.png` — real product screenshot (replace as needed)
+- `testneetscreen.webp`, `homecbt.webp`, `login.webp`, `scorecbt.webp` — real product screenshots, WebP at exact source size (2048×3640)
 - `og-cover.png` — social share image 1200×630
 - `sitemap.xml`, `robots.txt` — SEO
 
 ## Replace images
 
-Put your real screenshot at `screenshot.png` (1080×608) and a share image at
-`og-cover.png` (1200×630), then push. Pages deploys automatically.
+Drop WebP screenshots at the same filenames (any size works — page renders at
+their native aspect ratio), then push. Pages deploys automatically.
