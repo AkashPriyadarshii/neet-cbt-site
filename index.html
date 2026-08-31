@@ -1,429 +1,1572 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEET CBT 2027 — Free NTA Computer-Based Test Simulator &amp; Practice App</title>
-<meta name="description" content="NEET UG goes computer-based in 2027. Practice on a free, offline simulator that replicates the exact NTA CBT interface — question palette, mark for review, timer, auto-submit. Works on phone and laptop. Import your own PYQ banks.">
-<meta name="keywords" content="NEET 2027, NEET CBT, NEET computer based test, NTA CBT simulator, NEET practice app, NEET mock test, NEET UG 2027, mark for review, NTA interface">
+<title>NEET CBT 2027 Simulator — Free NTA Computer-Based Test Practice &amp; PYQ Engine</title>
+<meta name="description" content="NEET UG transition to computer-based testing in 2027. Practice on a free, offline-first simulator replicating exact NTA exam software with question palettes, section timers, mark for review, and PYQ import.">
+<meta name="keywords" content="NEET 2027, NEET CBT, NEET computer based test, NTA CBT simulator, NEET practice app, NEET mock test, NEET UG 2027, mark for review, NTA interface, offline PWA NEET">
 <meta name="author" content="Akash Priyadarshi">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://akashpriyadarshii.github.io/neet-cbt-site/">
-<meta name="theme-color" content="#0284c7">
+<meta name="theme-color" content="#070b14">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://akashpriyadarshii.github.io/neet-cbt-site/">
 <meta property="og:title" content="NEET CBT 2027 Simulator — Free NTA-Style Practice App">
-<meta property="og:description" content="NEET goes computer-based in 2027. Practice on a free offline simulator that replicates the exact NTA CBT interface — question palette, mark for review, timer, auto-submit. Import your own PYQs.">
+<meta property="og:description" content="NEET UG moves to computer-based exam in 2027. Replicate the real NTA test interface with question palette, live timer, and custom PYQ banks. 100% offline.">
 <meta property="og:image" content="https://akashpriyadarshii.github.io/neet-cbt-site/og-cover.png">
 <meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="NEET CBT 2027 Simulator">
 
-<!-- Twitter -->
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NEET CBT 2027 Simulator — Free NTA-Style Practice App">
-<meta name="twitter:description" content="Practice the exact NTA CBT interface for NEET 2027. Free, offline, phone + laptop. Import your own PYQs.">
+<meta name="twitter:description" content="Practice the exact NTA CBT interface for NEET 2027. Free, offline PWA, phone and laptop compatible.">
 <meta name="twitter:image" content="https://akashpriyadarshii.github.io/neet-cbt-site/og-cover.png">
 
 <style>
-:root{
-  --navy:#1a2b4a;
-  --blue:#0284c7;
-  --blue-deep:#0369a1;
-  --accent:#0284c7;
-  --accent-light:#38bdf8;
-  --ink:#16233d;
-  --paper:#f4f6fa;
-  --white:#ffffff;
-  --line:#dbe3ef;
-  --green:#15803d;
-  --radius:10px;
-  --shadow:0 10px 30px rgba(22,35,61,.08);
+:root {
+  /* Color system - clinical precision theme (Hue 175° - 200° / strict clear of 15°-45°) */
+  --ground: #070b14;
+  --ground-card: #0c1322;
+  --ground-subtle: #111a2e;
+  --ground-panel: #16223b;
+  --surface-border: #1e2e4f;
+  --surface-border-bright: #2d4373;
+
+  --ink-primary: #f8fafc;
+  --ink-secondary: #94a3b8;
+  --ink-muted: #64748b;
+  --ink-accent: #38bdf8;
+
+  --brand-cyan: #0284c7;
+  --brand-cyan-light: #38bdf8;
+  --brand-teal: #0d9488;
+  --brand-teal-glow: rgba(13, 148, 136, 0.25);
+
+  /* NTA Official Examination Status Tokens */
+  --nta-answered: #16a34a;
+  --nta-answered-glow: rgba(22, 163, 74, 0.3);
+  --nta-not-answered: #dc2626;
+  --nta-marked: #9333ea;
+  --nta-marked-ans: #7c3aed;
+  --nta-not-visited: #475569;
+
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 12px 36px rgba(0, 0, 0, 0.5);
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'IBM Plex Sans',system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  color:var(--ink);background:var(--white);line-height:1.6;
+
+[data-theme="light"] {
+  --ground: #f8fafc;
+  --ground-card: #ffffff;
+  --ground-subtle: #f1f5f9;
+  --ground-panel: #e2e8f0;
+  --surface-border: #cbd5e1;
+  --surface-border-bright: #94a3b8;
+
+  --ink-primary: #0f172a;
+  --ink-secondary: #334155;
+  --ink-muted: #64748b;
+  --ink-accent: #0284c7;
+
+  --brand-cyan: #0284c7;
+  --brand-cyan-light: #0369a1;
+  --brand-teal: #0f766e;
+  --brand-teal-glow: rgba(15, 118, 110, 0.15);
+
+  --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.06);
+  --shadow-elevated: 0 12px 36px rgba(15, 23, 42, 0.08);
 }
-h1,h2,h3,h4,.brand,.eyebrow,.btn,.kicker,.crest,.num,.n,.timer,.badge b{
-  font-family:'Work Sans','IBM Plex Sans',system-ui,-apple-system,sans-serif;
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background-color: var(--ground);
+  color: var(--ink-primary);
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
-a{color:var(--blue);text-decoration:none}
-img{max-width:100%;display:block}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-/* header — gov-style top bar */
-.topbar{background:var(--navy);color:#fff;font-size:.78rem;letter-spacing:.04em;padding:.45rem 0}
-.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.topbar span{opacity:.85}
-.topbar a{color:#fff;border-bottom:1px dotted rgba(255,255,255,.5)}
-.topbar a:hover{border-bottom-color:#fff}
+/* Typography styles */
+h1, h2, h3, h4, .brand-title, .stat-value, .badge, .btn {
+  font-family: var(--font-display);
+}
 
-header.main{background:var(--navy);color:#fff;padding:1.2rem 0;border-bottom:4px solid var(--accent)}
-header.main .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.15rem;letter-spacing:.02em}
-.crest{width:42px;height:42px;border-radius:50%;background:var(--accent);color:#ffffff;
-  display:grid;place-items:center;font-weight:900;font-size:1.15rem;box-shadow:inset 0 0 0 3px var(--navy),inset 0 0 0 4.5px var(--accent);}
-.brand small{display:block;font-weight:400;font-size:.68rem;opacity:.7;letter-spacing:.08em;text-transform:uppercase}
-nav ul{display:flex;gap:22px;list-style:none;font-size:.92rem}
-nav a{color:#fff;opacity:.9;font-weight:600}
-nav a:hover{opacity:1;color:var(--accent-light)}
+.mono { font-family: var(--font-mono); }
 
-/* hero */
-.hero{background:linear-gradient(180deg,var(--navy) 0%,#20345c 100%);color:#fff;padding:64px 0 72px}
-.hero .wrap{max-width:760px;text-align:center}
-.hero .cta{justify-content:center}
-.eyebrow{display:inline-block;background:var(--accent);color:#ffffff;font-weight:800;font-size:.72rem;
-  letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;border-radius:4px;margin-bottom:18px}
-.hero h1{font-size:clamp(1.9rem,4vw,3rem);line-height:1.12;margin-bottom:18px;font-weight:800}
-.hero h1 em{font-style:normal;color:var(--accent-light)}
-.hero p.lead{font-size:1.08rem;opacity:.92;margin-bottom:26px;max-width:34em}
-.cta{display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-block;padding:.85rem 1.6rem;border-radius:8px;font-weight:800;font-size:1rem;transition:.15s}
-.btn.primary{background:var(--accent);color:#ffffff}
-.btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(2,132,199,.35)}
-.btn.ghost{border:2px solid rgba(255,255,255,.55);color:#fff}
-.btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
-.hero-note{font-size:.8rem;opacity:.6;margin-top:14px}
-.hero-badge{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px}
-.badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:.7rem;text-align:center}
-.badge b{display:block;font-size:1.15rem;color:var(--accent-light)}
-.badge span{font-size:.72rem;opacity:.8}
+a { color: var(--brand-cyan-light); text-decoration: none; transition: color 0.15s ease; }
+a:hover { color: #7dd3fc; }
 
-/* demo mock */
-.mock{background:var(--paper);border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
-.mock-head{background:var(--navy);color:#fff;padding:.5rem .9rem;display:flex;gap:6px;align-items:center;font-size:.7rem;letter-spacing:.06em}
-.mock-head i{width:10px;height:10px;border-radius:50%;display:inline-block}
-.mock-head i:nth-child(1){background:#f87171}
-.mock-head i:nth-child(2){background:#38bdf8}
-.mock-head i:nth-child(3){background:#34d399}
-.mock-body{position:relative;background:linear-gradient(180deg,#eef2f8,var(--paper))}
-.mock-top{display:flex;justify-content:space-between;padding:12px 14px;font-size:.78rem;font-weight:700;color:var(--navy)}
-.mock-top .timer{background:var(--accent);color:#ffffff;border-radius:4px;padding:.1rem .5rem}
-.mock-q{padding:10px 14px 6px}
-.q-num{font-size:.72rem;color:var(--blue);font-weight:800}
-.mock-q p{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:.86rem;margin-top:6px;box-shadow:0 2px 6px rgba(22,35,61,.04)}
-.mock-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 14px}
-.opt{border:1px solid var(--line);border-radius:8px;background:#fff;padding:.55rem .7rem;font-size:.78rem;display:flex;align-items:center;gap:8px}
-.opt b{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.62rem;color:var(--ink)}
-.opt.sel{border-color:var(--blue)}
-.opt.sel b{border-color:var(--blue);color:#fff;background:var(--blue)}
-.mock-foot{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-top:1px solid var(--line);background:#fff}
-.palette{display:flex;gap:4px}
-.pal{width:22px;height:22px;border-radius:4px;border:1px solid var(--line);font-size:.6rem;display:grid;place-items:center;font-weight:700}
-.pal.answered{background:var(--green);color:#fff;border-color:var(--green)}
-.pal.marked{background:var(--accent);color:#ffffff;border-color:var(--accent)}
-.mock-foot .btn{font-size:.75rem;padding:.4rem .9rem}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-/* sections */
-section{padding:64px 0}
-section.alt{background:var(--paper)}
-.sec-head{max-width:640px;margin-bottom:40px}
-.sec-head .kicker{color:var(--blue);font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;margin-bottom:8px}
-.sec-head h2{font-size:clamp(1.5rem,3vw,2.1rem);color:var(--navy);line-height:1.2;margin-bottom:10px}
-.sec-head p{opacity:.85}
+/* Clinical Gov Alert Bar */
+.gov-alert {
+  background: #032b43;
+  border-bottom: 1px solid var(--surface-border);
+  color: #e0f2fe;
+  font-size: 0.82rem;
+  padding: 8px 0;
+  font-weight: 500;
+}
+.gov-alert .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.gov-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--brand-teal);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.gov-alert a {
+  color: #7dd3fc;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
 
-/* why 2027 */
-.timeline{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
-.card .num{width:38px;height:38px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:14px}
-.card h3{color:var(--navy);margin-bottom:8px;font-size:1.05rem}
-.card p{font-size:.92rem;opacity:.85}
+/* Navigation Header */
+header.site-header {
+  background: var(--ground);
+  border-bottom: 1px solid var(--surface-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+header.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-crest {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--brand-cyan), var(--brand-teal));
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.brand-text .brand-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand-text .brand-sub {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--ink-secondary);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.nav-links a:hover {
+  color: var(--ink-primary);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.theme-btn {
+  background: var(--ground-card);
+  border: 1px solid var(--surface-border);
+  color: var(--ink-secondary);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.theme-btn:hover {
+  color: var(--ink-primary);
+  border-color: var(--surface-border-bright);
+}
 
-/* features */
-.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.feat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:.15s}
-.feat:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(22,35,61,.12)}
-.feat .ico{width:46px;height:46px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:1.3rem;margin-bottom:14px}
-.feat h3{font-size:1rem;color:var(--navy);margin-bottom:6px}
-.feat p{font-size:.86rem;opacity:.85}
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: var(--brand-cyan);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.btn-primary:hover {
+  background: #0369a1;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--ink-primary);
+  border: 1px solid var(--surface-border-bright);
+}
+.btn-outline:hover {
+  background: var(--ground-card);
+  border-color: var(--brand-cyan);
+  color: var(--brand-cyan-light);
+}
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
 
-/* how it works */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.step{text-align:center;padding:20px 12px}
-.step .n{width:56px;height:56px;border-radius:50%;background:var(--accent);color:#ffffff;font-weight:900;font-size:1.3rem;display:grid;place-items:center;margin:0 auto 14px}
-.step h3{color:var(--navy);margin-bottom:6px}
-.step p{font-size:.88rem;opacity:.8;max-width:260px;margin:0 auto}
+/* Hero Section */
+.hero-section {
+  padding: 56px 0 64px;
+  border-bottom: 1px solid var(--surface-border);
+  background: radial-gradient(circle at 80% 20%, rgba(2, 132, 199, 0.08) 0%, transparent 60%);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+  align-items: center;
+}
+.kicker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ground-card);
+  border: 1px solid var(--surface-border-bright);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--brand-cyan-light);
+  margin-bottom: 20px;
+}
+.kicker-badge .pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+.hero-title {
+  font-size: clamp(2.1rem, 3.8vw, 3.2rem);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  color: var(--ink-primary);
+}
+.hero-title .highlight {
+  background: linear-gradient(135deg, #38bdf8 0%, #2dd4bf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-desc {
+  font-size: 1.1rem;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+  margin-bottom: 32px;
+  max-width: 580px;
+}
+.hero-cta-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.stat-ticker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--ground-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-subtle);
+}
+.stat-item {
+  border-right: 1px solid var(--surface-border);
+  padding-right: 12px;
+}
+.stat-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+.stat-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--brand-cyan-light);
+  font-family: var(--font-mono);
+  line-height: 1.2;
+}
+.stat-label {
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
 
-/* screenshots */
-.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:22px}
-.gallery figure{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
-.gallery img{width:100%;height:auto;display:block;border-bottom:1px solid var(--line)}
-.gallery figcaption{font-size:.78rem;text-align:center;padding:.6rem;opacity:.75}
+/* Interactive NTA Simulator Preview Widget */
+.sim-console {
+  background: var(--ground-card);
+  border: 1px solid var(--surface-border-bright);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle), var(--shadow-glow);
+}
+.console-header {
+  background: #032030;
+  border-bottom: 1px solid var(--surface-border);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-size: 0.82rem;
+}
+.console-status-pill {
+  background: rgba(2, 132, 199, 0.25);
+  border: 1px solid var(--brand-cyan);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  color: var(--brand-cyan-light);
+  font-weight: 600;
+}
+.console-timer {
+  background: #0f172a;
+  border: 1px solid #334155;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #f87171;
+}
+.console-body {
+  padding: 16px;
+}
+.console-subject-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--surface-border);
+  padding-bottom: 8px;
+}
+.sub-tab {
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  cursor: pointer;
+}
+.sub-tab.active {
+  background: var(--brand-cyan);
+  color: #ffffff;
+  border-color: var(--brand-cyan);
+}
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.q-index {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--brand-cyan-light);
+  font-family: var(--font-mono);
+}
+.q-marks {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+}
+.q-text {
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.option-row:hover {
+  border-color: var(--surface-border-bright);
+}
+.option-row.selected {
+  background: rgba(2, 132, 199, 0.15);
+  border-color: var(--brand-cyan);
+  color: var(--ink-primary);
+}
+.option-indicator {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-muted);
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.option-row.selected .option-indicator {
+  background: var(--brand-cyan);
+  border-color: var(--brand-cyan);
+  color: #fff;
+}
+.console-palette-panel {
+  border-top: 1px solid var(--surface-border);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.palette-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.pal-cell {
+  height: 26px;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #ffffff;
+  cursor: pointer;
+}
+.pal-answered { background: var(--nta-answered); }
+.pal-marked { background: var(--nta-marked); }
+.pal-marked-ans { background: var(--nta-marked-ans); border: 2px solid #22c55e; }
+.pal-unattempt { background: var(--nta-not-answered); }
+.pal-not-visited { background: var(--nta-not-visited); }
 
-/* faq */
-.faq{max-width:760px;margin:0 auto}
-details{border:1px solid var(--line);border-radius:8px;margin-bottom:12px;background:#fff;overflow:hidden}
-summary{cursor:pointer;padding:16px 20px;font-weight:700;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-size:1.3rem;color:var(--blue);font-weight:800}
-details[open] summary::after{content:"–"}
-details p{padding:0 20px 16px;font-size:.92rem;opacity:.88}
+.console-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
 
-/* footer */
-footer{background:var(--navy);color:#cfd8e8;padding:40px 0 48px;font-size:.85rem}
-footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-footer h4{color:#fff;font-size:.95rem;margin-bottom:10px}
-footer ul{list-style:none;display:grid;gap:6px}
-footer a{color:#cfd8e8}
-footer a:hover{color:var(--accent-light)}
-.disclaimer{margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);font-size:.74rem;opacity:.75;line-height:1.5}
+/* Sections Structure */
+section.page-section {
+  padding: 72px 0;
+  border-bottom: 1px solid var(--surface-border);
+}
+section.page-section.alt-bg {
+  background: var(--ground-card);
+}
+.section-header {
+  max-width: 680px;
+  margin-bottom: 48px;
+}
+.section-kicker {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand-cyan-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  display: block;
+}
+.section-title {
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  margin-bottom: 14px;
+}
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+}
 
-@media (max-width:820px){
-  .hero .shot{max-width:330px}
-  .feats,.steps,.timeline,.gallery{grid-template-columns:1fr}
-  .hero-badge{grid-template-columns:repeat(3,1fr)}
-  nav ul{gap:12px;font-size:.8rem}
-  footer .wrap{grid-template-columns:1fr}
+/* Comparative Grid: OMR vs CBT */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.compare-col {
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+.compare-col.highlighted {
+  border-color: var(--brand-cyan);
+  background: linear-gradient(180deg, rgba(2, 132, 199, 0.06) 0%, var(--ground-subtle) 100%);
+}
+.compare-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.tag-danger { background: rgba(220, 38, 38, 0.2); color: #f87171; border: 1px solid #ef4444; }
+.tag-success { background: rgba(13, 148, 136, 0.2); color: #2dd4bf; border: 1px solid #0d9488; }
+.compare-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: var(--ink-primary);
+}
+.point-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+.point-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.point-icon.bad { background: #991b1b; color: #fff; }
+.point-icon.good { background: #065f46; color: #fff; }
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.feat-card {
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.feat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--surface-border-bright);
+}
+.feat-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(2, 132, 199, 0.15);
+  border: 1px solid var(--brand-cyan);
+  display: grid;
+  place-items: center;
+  color: var(--brand-cyan-light);
+  font-size: 1.25rem;
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.feat-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--ink-primary);
+}
+.feat-desc {
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+}
+
+/* Gallery Viewports */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.shot-card {
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+}
+.shot-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid var(--surface-border);
+}
+.shot-meta {
+  padding: 16px;
+}
+.shot-tag {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--brand-cyan-light);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+.shot-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 4px;
+}
+.shot-detail {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+/* Syllabus & Weightage Checklist */
+.syllabus-cockpit {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.subject-box {
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.subject-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--surface-border);
+}
+.subject-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+}
+.subject-count {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  background: var(--ground-panel);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--brand-cyan-light);
+}
+.topic-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.topic-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  color: var(--ink-secondary);
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--ground);
+}
+.topic-weight {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--brand-teal);
+  font-weight: 600;
+}
+
+/* FAQ Accordion */
+.faq-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+}
+details.faq-item {
+  background: var(--ground-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+details.faq-item[open] {
+  border-color: var(--surface-border-bright);
+}
+summary.faq-q {
+  padding: 16px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+summary.faq-q::-webkit-details-marker { display: none; }
+summary.faq-q::after {
+  content: "+";
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  color: var(--brand-cyan-light);
+  font-weight: 700;
+}
+details.faq-item[open] summary.faq-q::after {
+  content: "−";
+}
+.faq-a {
+  padding: 0 20px 18px;
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+}
+
+/* Footer */
+footer.site-footer {
+  background: #040810;
+  border-top: 1px solid var(--surface-border);
+  padding: 56px 0 40px;
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-col h4 {
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer-links a {
+  color: var(--ink-secondary);
+  font-size: 0.86rem;
+}
+.footer-links a:hover {
+  color: var(--brand-cyan-light);
+}
+.disclaimer-box {
+  background: var(--ground-card);
+  border: 1px solid var(--surface-border);
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* Responsive queries */
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .comparison-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .syllabus-cockpit { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .stat-ticker { grid-template-columns: repeat(2, 1fr); }
+  .nav-links { display: none; }
+}
+
+@media (max-width: 580px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .stat-ticker { grid-template-columns: 1fr; }
+  .palette-grid { grid-template-columns: repeat(5, 1fr); }
 }
 </style>
 </head>
 <body>
 
-<!-- top bar -->
-<div class="topbar">
-  <div class="wrap">
-    <span>NEET UG · Computer-Based Test (CBT) begins 2027</span>
-    <span><a href="https://neet-cbt.vercel.app/">Launch Simulator →</a></span>
+<!-- Gov-Rigor Top Notification Bar -->
+<div class="gov-alert">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="gov-tag">Official Transition</span>
+      <span>NEET UG moves to Computer-Based Testing (CBT) beginning 2027</span>
+    </div>
+    <div>
+      <a href="https://neet-cbt.vercel.app/" target="_blank" rel="noopener">Launch Live Simulator →</a>
+    </div>
   </div>
 </div>
 
-<header class="main">
-  <div class="wrap">
-    <div class="brand">
-      <div class="crest">N</div>
-      <div>NEET CBT 2027<small>Simulator · Free · Offline</small></div>
+<!-- Header -->
+<header class="site-header">
+  <div class="container">
+    <div class="brand-group">
+      <div class="brand-crest">N</div>
+      <div class="brand-text">
+        <div class="brand-title">NEET CBT 2027</div>
+        <div class="brand-sub">NTA Test Simulator Engine</div>
+      </div>
     </div>
-    <nav>
-      <ul>
-        <li><a href="#why">Why 2027</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
-    </nav>
+
+    <ul class="nav-links">
+      <li><a href="#why">Why CBT 2027</a></li>
+      <li><a href="#simulator">Live Demo</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#syllabus">High-Yield Syllabus</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+
+    <div class="header-actions">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle exam room lighting">
+        <span id="themeLabel">Light Mode</span>
+      </button>
+      <a href="https://neet-cbt.vercel.app/" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Launch App</a>
+    </div>
   </div>
 </header>
 
-<!-- hero -->
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <span class="eyebrow">Free · Open Source · No Account</span>
-      <h1>NEET goes <em>computer-based</em> in 2027. Practice the real interface — today.</h1>
-      <p class="lead">NEET UG is moving to a computer-based test from 2027. This free simulator replicates the exact NTA CBT interface — question palette, mark for review, on-screen timer, auto-submit — so nothing surprises you on exam day.</p>
-      <div class="cta">
-        <a class="btn primary" href="https://neet-cbt.vercel.app/">Launch the Simulator →</a>
-        <a class="btn ghost" href="#why">Why the change?</a>
-      </div>
-      <p class="hero-note">Works offline after first visit · Phone &amp; laptop · Import your own PYQ banks</p>
-      <div class="hero-badge">
-        <div class="badge"><b>200+</b><span>Questions included</span></div>
-        <div class="badge"><b>100%</b><span>Offline-first</span></div>
-        <div class="badge"><b>₹0</b><span>Free forever</span></div>
-      </div>
-    </div>
-
-    <!-- mock UI -->
-    <div class="mock" aria-hidden="true">
-      <div class="mock-head"><i></i><i></i><i></i>&nbsp;NEET CBT 2027 — Physics</div>
-      <div class="mock-body">
-        <div class="mock-top">
-          <span>Question 12 of 180</span>
-          <span class="timer">02:34:10</span>
+<!-- Hero Section with Live Simulator Widget -->
+<section class="hero-section" id="simulator">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Left Column: Copy and Stats -->
+      <div>
+        <div class="kicker-badge">
+          <span class="pulse-dot"></span>
+          <span>NTA ENGINE REPLICA · OFFLINE PWA · NO LOGIN</span>
         </div>
-        <div class="mock-q">
-          <span class="q-num">Q.12</span>
-          <p>A stone is dropped from a height h. Its velocity just before striking the ground is…</p>
+
+        <h1 class="hero-title">
+          Master the <span class="highlight">NTA CBT Interface</span> before exam day.
+        </h1>
+
+        <p class="hero-desc">
+          OMR sheets are retiring. NEET UG 2027 shifts to on-screen testing. Practice with authentic section timers, question palettes, and mark for review flows on phone or desktop.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="https://neet-cbt.vercel.app/" class="btn btn-primary" target="_blank" rel="noopener">
+            Launch Free Simulator
+          </a>
+          <a href="https://github.com/AkashPriyadarshii/neet-cbt" class="btn btn-outline" target="_blank" rel="noopener">
+            View Source Code
+          </a>
         </div>
-        <div class="mock-opts">
-          <div class="opt sel"><b>A</b>√(2gh)</div>
-          <div class="opt"><b>B</b>√(gh)</div>
-          <div class="opt"><b>C</b>2√(gh)</div>
-          <div class="opt"><b>D</b>gh</div>
+
+        <div class="stat-ticker">
+          <div class="stat-item">
+            <div class="stat-value">180</div>
+            <div class="stat-label">Questions</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">720</div>
+            <div class="stat-label">Total Marks</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">200m</div>
+            <div class="stat-label">Countdown</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Offline PWA</div>
+          </div>
         </div>
-        <div class="mock-foot">
-          <span class="palette">
-            <span class="pal answered">1</span><span class="pal answered">2</span><span class="pal marked">3</span><span class="pal">4</span><span class="pal">5</span>
-          </span>
-          <a class="btn primary" href="https://neet-cbt.vercel.app/">Try it free</a>
+      </div>
+
+      <!-- Right Column: Interactive NTA UI Mock -->
+      <div>
+        <div class="sim-console" aria-label="Interactive NTA Question Palette Simulator">
+          <div class="console-header">
+            <span class="console-status-pill">PHYSICS · SECTION A</span>
+            <span class="console-timer" id="demoTimer">03:19:42</span>
+          </div>
+
+          <div class="console-body">
+            <div class="console-subject-bar">
+              <span class="sub-tab active" onclick="switchSubject('physics', this)">Physics (45)</span>
+              <span class="sub-tab" onclick="switchSubject('chemistry', this)">Chemistry (45)</span>
+              <span class="sub-tab" onclick="switchSubject('botany', this)">Botany (45)</span>
+              <span class="sub-tab" onclick="switchSubject('zoology', this)">Zoology (45)</span>
+            </div>
+
+            <div class="q-header">
+              <span class="q-index" id="demoQNum">Question 14 of 180</span>
+              <span class="q-marks">+4.0 / -1.0</span>
+            </div>
+
+            <div class="q-text" id="demoQText">
+              A body of mass 2 kg is projected with initial velocity 20 m/s at an angle of 30° with the horizontal. The kinetic energy of the body at the highest point of its trajectory is:
+            </div>
+
+            <div class="options-grid" id="demoOptions">
+              <div class="option-row" onclick="selectOption(0, this)">
+                <span class="option-indicator">1</span>
+                <span>100 Joules</span>
+              </div>
+              <div class="option-row selected" onclick="selectOption(1, this)">
+                <span class="option-indicator">2</span>
+                <span>300 Joules</span>
+              </div>
+              <div class="option-row" onclick="selectOption(2, this)">
+                <span class="option-indicator">3</span>
+                <span>400 Joules</span>
+              </div>
+              <div class="option-row" onclick="selectOption(3, this)">
+                <span class="option-indicator">4</span>
+                <span>200 Joules</span>
+              </div>
+            </div>
+
+            <div class="console-palette-panel">
+              <div class="palette-title">
+                <span>Question Palette Matrix</span>
+                <span id="paletteStatus">Answered: 8 | Marked: 2</span>
+              </div>
+              <div class="palette-grid" id="paletteCells">
+                <div class="pal-cell pal-answered">1</div>
+                <div class="pal-cell pal-answered">2</div>
+                <div class="pal-cell pal-marked">3</div>
+                <div class="pal-cell pal-answered">4</div>
+                <div class="pal-cell pal-answered">5</div>
+                <div class="pal-cell pal-marked-ans">6</div>
+                <div class="pal-cell pal-answered">7</div>
+                <div class="pal-cell pal-answered">8</div>
+                <div class="pal-cell pal-unattempt">9</div>
+                <div class="pal-cell pal-answered">10</div>
+                <div class="pal-cell pal-answered">11</div>
+                <div class="pal-cell pal-marked">12</div>
+                <div class="pal-cell pal-answered">13</div>
+                <div class="pal-cell pal-answered" style="outline:2px solid #38bdf8;">14</div>
+                <div class="pal-cell pal-not-visited">15</div>
+                <div class="pal-cell pal-not-visited">16</div>
+                <div class="pal-cell pal-not-visited">17</div>
+                <div class="pal-cell pal-not-visited">18</div>
+                <div class="pal-cell pal-not-visited">19</div>
+                <div class="pal-cell pal-not-visited">20</div>
+              </div>
+            </div>
+
+            <div class="console-actions">
+              <button class="btn btn-outline btn-sm" onclick="toggleMarkReview()">Mark for Review</button>
+              <button class="btn btn-outline btn-sm" onclick="clearResponse()">Clear Response</button>
+              <button class="btn btn-primary btn-sm" onclick="nextQuestion()">Save &amp; Next</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- why -->
-<section id="why">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">The big shift</span>
-      <h2>OMR sheets are out. Screens are in.</h2>
-      <p>After the 2026 paper leaks, the government confirmed it: NEET UG moves to a computer-based test. Every topper is now practicing on-screen. You should too.</p>
+<!-- Shift Intelligence: OMR vs CBT Comparison -->
+<section class="page-section" id="why">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-kicker">Operational Transition</span>
+      <h2 class="section-title">OMR sheets are out. Screen speed decides ranks.</h2>
+      <p class="section-subtitle">
+        The Union Education Ministry finalized the computer-based format to eliminate paper leaks, tampering, and physical bubbling errors. Interface literacy is now a competitive advantage.
+      </p>
     </div>
-    <div class="timeline">
-      <div class="card">
-        <div class="num">1</div>
-        <h3>Paperless, randomized questions</h3>
-        <p>Question order and answer options are shuffled per candidate. Familiarity with the on-screen flow becomes a real advantage.</p>
+
+    <div class="comparison-grid">
+      <!-- Old OMR Column -->
+      <div class="compare-col">
+        <span class="compare-tag tag-danger">OMR Paper Paradigm (2004–2026)</span>
+        <h3 class="compare-title">Paper Friction &amp; Inversion Risks</h3>
+        <ul class="point-list">
+          <li class="point-item">
+            <span class="point-icon bad">✕</span>
+            <span><strong>Bubbling Tax:</strong> Marking 180 bubbles takes 18–22 minutes of pure mechanical wrist time.</span>
+          </li>
+          <li class="point-item">
+            <span class="point-icon bad">✕</span>
+            <span><strong>Irreversible Mistakes:</strong> Fill Option B instead of C by mistake and you lose 5 marks with zero remedy.</span>
+          </li>
+          <li class="point-item">
+            <span class="point-icon bad">✕</span>
+            <span><strong>Bubble Displacement:</strong> An accidental offset at Question 40 offsets all subsequent answers on the row.</span>
+          </li>
+          <li class="point-item">
+            <span class="point-icon bad">✕</span>
+            <span><strong>Vulnerability:</strong> Physical paper transit created systemic security risks across exam centers.</span>
+          </li>
+        </ul>
       </div>
-      <div class="card">
-        <div class="num">2</div>
-        <h3>Mark for review, on-screen timer</h3>
-        <p>The palette, the review system, the auto-submit countdown — all now happen inside the exam software. Practicing the interface is part of preparing.</p>
-      </div>
-      <div class="card">
-        <div class="num">3</div>
-        <h3>Multi-shift scheduling</h3>
-        <p>Multiple shifts across the day mean more seating, but also more variance. The simulator trains you to perform under any condition.</p>
-      </div>
-      <div class="card">
-        <div class="num">4</div>
-        <h3>Built to mirror NTA's software</h3>
-        <p>This simulator was built as an NTA-interface replica — down to the palette colors, the mark-for-review flow, and the auto-submit overlay.</p>
+
+      <!-- New CBT Column -->
+      <div class="compare-col highlighted">
+        <span class="compare-tag tag-success">NTA CBT Simulator Paradigm (2027+)</span>
+        <h3 class="compare-title">Instant Telemetry &amp; Error Correction</h3>
+        <ul class="point-list">
+          <li class="point-item">
+            <span class="point-icon good">✓</span>
+            <span><strong>18 Minutes Saved:</strong> Instant clicks give you 20+ minutes back for complex calculation review.</span>
+          </li>
+          <li class="point-item">
+            <span class="point-icon good">✓</span>
+            <span><strong>Free Answer Revision:</strong> Modify or clear any chosen option right up until the final second.</span>
+          </li>
+          <li class="point-item">
+            <span class="point-icon good">✓</span>
+            <span><strong>Mark for Review:</strong> Filter doubtful questions directly in the color-coded question palette.</span>
+          </li>
+          <li class="point-item">
+            <span class="point-icon good">✓</span>
+            <span><strong>Randomized Item Delivery:</strong> Shuffled question orders eliminate neighbor-view bias.</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- features -->
-<section class="alt" id="features">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">Everything you need</span>
-      <h2>Built like the real exam. Better than a test series.</h2>
+<!-- Features Grid -->
+<section class="page-section alt-bg" id="features">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-kicker">Architecture &amp; Features</span>
+      <h2 class="section-title">Built with NTA exam room fidelity.</h2>
+      <p class="section-subtitle">
+        Every button, status color, timer threshold, and section navigation rule matches the authentic NTA examination software.
+      </p>
     </div>
-    <div class="feats">
-      <div class="feat"><div class="ico">🎯</div><h3>Exact NTA interface</h3><p>Question palette, mark-for-review, save-and-next, auto-submit — a faithful replica of the exam software.</p></div>
-      <div class="feat"><div class="ico">⏱️</div><h3>On-screen timer</h3><p>Real 180-question countdown with a time-up overlay, so you learn to manage the clock under pressure.</p></div>
-      <div class="feat"><div class="ico">📱</div><h3>Phone + laptop</h3><p>Installable PWA. Works on any device, offline after first visit, no account required.</p></div>
-      <div class="feat"><div class="ico">📦</div><h3>Import your PYQs</h3><p>Bring your own previous-year question banks in a simple format. Practice what you actually need.</p></div>
-      <div class="feat"><div class="ico">🔒</div><h3>Private by design</h3><p>All data lives on your device. No accounts, no tracking, no uploads.</p></div>
-      <div class="feat"><div class="ico">🧠</div><h3>Exam-day simulation</h3><p>NTA-style pre-exam screens, candidate info panel, and the full flow — not just questions on a page.</p></div>
+
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-badge">01</div>
+        <h3 class="feat-title">Exact Question Palette</h3>
+        <p class="feat-desc">
+          Official 5-state tracking: Answered (Green), Not Answered (Red), Marked for Review (Purple), Answered &amp; Marked (Violet with Green dot), and Not Visited (Gray).
+        </p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-badge">02</div>
+        <h3 class="feat-title">Section A &amp; B Selection Logic</h3>
+        <p class="feat-desc">
+          Simulates NEET pattern: 35 mandatory questions in Section A, plus pick any 10 out of 15 questions in Section B with automatic validation limits.
+        </p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-badge">03</div>
+        <h3 class="feat-title">Live 200-Minute Clock</h3>
+        <p class="feat-desc">
+          Real-time countdown with automatic test submission upon timer expiration and section-wise time expenditure analytics.
+        </p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-badge">04</div>
+        <h3 class="feat-title">100% Offline PWA</h3>
+        <p class="feat-desc">
+          Install to your Android phone, iPad, or laptop home screen. Works completely without internet connection after initial page load.
+        </p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-badge">05</div>
+        <h3 class="feat-title">Import Custom PYQs</h3>
+        <p class="feat-desc">
+          Load previous-year question banks (2019–2026) or coaching test series via simple JSON schema directly into local IndexedDB storage.
+        </p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-badge">06</div>
+        <h3 class="feat-title">Instant Score &amp; Accuracy Report</h3>
+        <p class="feat-desc">
+          Generates comprehensive scorecards with section-wise breakdown, negative mark deductions, and accuracy percentage charts.
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- how -->
-<section id="how">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">Get started</span>
-      <h2>Three steps to your first mock</h2>
+<!-- Interface Screenshots Gallery -->
+<section class="page-section" id="screenshots">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-kicker">Visual Verification</span>
+      <h2 class="section-title">Interface screenshots from the live simulator.</h2>
+      <p class="section-subtitle">
+        Explore actual screens from the test environment: from candidate authentication to the question interface and final score analysis.
+      </p>
     </div>
-    <div class="steps">
-      <div class="step"><div class="n">1</div><h3>Open the app</h3><p>Visit neet-cbt.vercel.app on your phone or laptop. No sign-up.</p></div>
-      <div class="step"><div class="n">2</div><h3>Pick a bank</h3><p>Start with the built-in questions or import your own PYQ bank.</p></div>
-      <div class="step"><div class="n">3</div><h3>Practice like exam day</h3><p>Mark questions for review, watch the timer, and learn the CBT flow.</p></div>
-    </div>
-    <div class="gallery">
-      <figure><img src="testneetscreen.webp" alt="NEET CBT 2027 simulator during a mock test — question, options, question palette, mark for review and live timer" loading="lazy"><figcaption>The simulator in action</figcaption></figure>
-      <figure><img src="homecbt.webp" alt="NEET CBT 2027 simulator home screen with question bank selection" loading="lazy"><figcaption>Pick a question bank</figcaption></figure>
-      <figure><img src="login.webp" alt="NEET CBT 2027 NTA-style candidate login screen" loading="lazy"><figcaption>NTA-style login</figcaption></figure>
-      <figure><img src="scorecbt.webp" alt="NEET CBT 2027 mock test score and result screen" loading="lazy"><figcaption>Instant score report</figcaption></figure>
+
+    <div class="gallery-grid">
+      <div class="shot-card">
+        <img src="testneetscreen.webp" alt="NEET CBT 2027 simulator live test interface with question palette, options and timer" loading="lazy">
+        <div class="shot-meta">
+          <span class="shot-tag">Exam Screen</span>
+          <h4 class="shot-name">NTA Computer-Based Test Console</h4>
+          <p class="shot-detail">Full exam screen with question viewport, 4-option selection, timer, and real-time palette matrix.</p>
+        </div>
+      </div>
+
+      <div class="shot-card">
+        <img src="homecbt.webp" alt="NEET CBT 2027 simulator home screen with test bank selection" loading="lazy">
+        <div class="shot-meta">
+          <span class="shot-tag">Question Bank Hub</span>
+          <h4 class="shot-name">Subject &amp; Mock Selector</h4>
+          <p class="shot-detail">Select full-length NEET mocks, single-subject drills, or custom imported question packages.</p>
+        </div>
+      </div>
+
+      <div class="shot-card">
+        <img src="login.webp" alt="NEET CBT 2027 NTA-style candidate login screen" loading="lazy">
+        <div class="shot-meta">
+          <span class="shot-tag">Authentication</span>
+          <h4 class="shot-name">Candidate Hall Ticket Login</h4>
+          <p class="shot-detail">Authentic NTA pre-exam terminal login with roll number and system PIN simulation.</p>
+        </div>
+      </div>
+
+      <div class="shot-card">
+        <img src="scorecbt.webp" alt="NEET CBT 2027 mock test score and result screen" loading="lazy">
+        <div class="shot-meta">
+          <span class="shot-tag">Analytics</span>
+          <h4 class="shot-name">Post-Test Performance Telemetry</h4>
+          <p class="shot-detail">Instant breakdown of raw score out of 720, correct vs incorrect counts, and negative mark penalties.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- faq -->
-<section class="alt" id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">FAQ</span>
-      <h2>Common questions</h2>
+<!-- Syllabus & Weightage Checklist -->
+<section class="page-section alt-bg" id="syllabus">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-kicker">Curriculum Blueprint</span>
+      <h2 class="section-title">High-yield NEET chapter distribution.</h2>
+      <p class="section-subtitle">
+        Optimized question bank categorization aligned with the latest National Medical Commission (NMC) syllabus.
+      </p>
     </div>
-    <div class="faq">
-      <details open>
-        <summary>Is the NEET CBT simulator free?</summary>
-        <p>Yes. Completely free and open source (MIT). No account, no ads, no hidden costs — and it works offline after your first visit.</p>
+
+    <div class="syllabus-cockpit">
+      <!-- Physics Box -->
+      <div class="subject-box">
+        <div class="subject-header">
+          <span class="subject-name">Physics</span>
+          <span class="subject-count">45 Qs · 180 Marks</span>
+        </div>
+        <ul class="topic-list">
+          <li class="topic-item"><span>Mechanics &amp; Motion</span><span class="topic-weight">11–13 Qs</span></li>
+          <li class="topic-item"><span>Electrodynamics &amp; Current</span><span class="topic-weight">9–11 Qs</span></li>
+          <li class="topic-item"><span>Optics &amp; Wave Theory</span><span class="topic-weight">4–5 Qs</span></li>
+          <li class="topic-item"><span>Modern Physics &amp; Semiconductors</span><span class="topic-weight">6–8 Qs</span></li>
+          <li class="topic-item"><span>Thermodynamics &amp; KTG</span><span class="topic-weight">3–4 Qs</span></li>
+        </ul>
+      </div>
+
+      <!-- Chemistry Box -->
+      <div class="subject-box">
+        <div class="subject-header">
+          <span class="subject-name">Chemistry</span>
+          <span class="subject-count">45 Qs · 180 Marks</span>
+        </div>
+        <ul class="topic-list">
+          <li class="topic-item"><span>Organic Reactions &amp; Biomolecules</span><span class="topic-weight">14–16 Qs</span></li>
+          <li class="topic-item"><span>Inorganic &amp; Coordination Compounds</span><span class="topic-weight">12–14 Qs</span></li>
+          <li class="topic-item"><span>Chemical Thermodynamics &amp; Equilibrium</span><span class="topic-weight">6–8 Qs</span></li>
+          <li class="topic-item"><span>Electrochemistry &amp; Solutions</span><span class="topic-weight">5–6 Qs</span></li>
+          <li class="topic-item"><span>Structure of Atom &amp; Bonding</span><span class="topic-weight">4–5 Qs</span></li>
+        </ul>
+      </div>
+
+      <!-- Biology Box -->
+      <div class="subject-box">
+        <div class="subject-header">
+          <span class="subject-name">Biology (Botany + Zoology)</span>
+          <span class="subject-count">90 Qs · 360 Marks</span>
+        </div>
+        <ul class="topic-list">
+          <li class="topic-item"><span>Human Physiology</span><span class="topic-weight">16–18 Qs</span></li>
+          <li class="topic-item"><span>Genetics &amp; Molecular Basis</span><span class="topic-weight">14–16 Qs</span></li>
+          <li class="topic-item"><span>Plant Physiology &amp; Reproduction</span><span class="topic-weight">12–14 Qs</span></li>
+          <li class="topic-item"><span>Ecology &amp; Environment</span><span class="topic-weight">10–12 Qs</span></li>
+          <li class="topic-item"><span>Cell Structure &amp; Biotechnology</span><span class="topic-weight">10–12 Qs</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Accordion -->
+<section class="page-section" id="faq">
+  <div class="container">
+    <div class="section-header" style="text-align:center;margin-left:auto;margin-right:auto;">
+      <span class="section-kicker">Candidate Queries</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">Everything you need to know about the 2027 CBT shift and the practice simulator.</p>
+    </div>
+
+    <div class="faq-wrap">
+      <details class="faq-item" open>
+        <summary class="faq-q">Is the NEET CBT simulator completely free?</summary>
+        <div class="faq-a">
+          Yes. The simulator is completely free and open source under the MIT license. There are no paywalls, no required sign-ups, and no advertising trackers.
+        </div>
       </details>
-      <details>
-        <summary>Is this the official NTA test?</summary>
-        <p>No. This is an independent, free practice tool that replicates the NTA computer-based test interface. It is not affiliated with or endorsed by the NTA, NMC, or any government body.</p>
+
+      <details class="faq-item">
+        <summary class="faq-q">Is this the official NTA website?</summary>
+        <div class="faq-a">
+          No. This is an independent open-source practice project engineered to replicate the NTA computer-based examination interface. It is not affiliated with or endorsed by the National Testing Agency (NTA) or the National Medical Commission (NMC).
+        </div>
       </details>
-      <details>
-        <summary>Does it work on my phone?</summary>
-        <p>Yes. It's a progressive web app (PWA) — install it to your home screen and it behaves like a native app. Works on Android, iPhone, and desktop browsers.</p>
+
+      <details class="faq-item">
+        <summary class="faq-q">Does the application work offline?</summary>
+        <div class="faq-a">
+          Yes. The application is built as an offline-first Progressive Web App (PWA). Once loaded in your browser, all assets and question banks are cached locally in your browser storage.
+        </div>
       </details>
-      <details>
-        <summary>Can I practice with my own questions?</summary>
-        <p>Yes. You can import your own question banks (including previous-year questions) in a simple supported format, then take them in the CBT interface.</p>
+
+      <details class="faq-item">
+        <summary class="faq-q">How do I import custom question banks or PYQs?</summary>
+        <div class="faq-a">
+          You can import standard JSON question files containing question text, 4 options, correct answer indices, and subject identifiers directly from the home screen import button.
+        </div>
       </details>
-      <details>
-        <summary>Does the 2027 NEET really become computer-based?</summary>
-        <p>Yes. Following the 2026 paper leaks, the Union Education Ministry confirmed NEET UG will move to a computer-based format from 2027, with randomized questions and multi-shift scheduling.</p>
-      </details>
-      <details>
-        <summary>How many questions does the simulator include?</summary>
-        <p>It ships with practice banks out of the box, and you can import as many additional banks as you like — including your own PYQ sets.</p>
+
+      <details class="faq-item">
+        <summary class="faq-q">Why is NEET UG transitioning to computer-based testing in 2027?</summary>
+        <div class="faq-a">
+          Following committee reviews on examination reforms, computer-based testing was chosen to ensure tamper-proof randomized question generation, eliminate logistics vulnerabilities associated with physical paper transportation, and remove OMR bubbling errors.
+        </div>
       </details>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div>
-      <h4>NEET CBT 2027 Simulator</h4>
-      <p>A free, open-source practice app that replicates the NTA computer-based test interface for NEET UG 2027.</p>
-      <p style="margin-top:10px"><a href="https://neet-cbt.vercel.app/">Launch the simulator →</a></p>
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>NEET CBT 2027 Simulator</h4>
+        <p style="margin-bottom:14px;line-height:1.6;">
+          An open-source computer-based test practice environment replicating official NTA examination workflows for medical aspirants across India.
+        </p>
+        <p>
+          <a href="https://neet-cbt.vercel.app/" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Launch Simulator WebApp →</a>
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#why">Why CBT 2027</a></li>
+          <li><a href="#simulator">Interactive Console</a></li>
+          <li><a href="#features">Simulator Features</a></li>
+          <li><a href="#screenshots">Screenshot Tour</a></li>
+          <li><a href="#syllabus">Weightage Breakdown</a></li>
+          <li><a href="#faq">Candidate FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Engineering &amp; Code</h4>
+        <ul class="footer-links">
+          <li><a href="https://github.com/AkashPriyadarshii/neet-cbt" target="_blank" rel="noopener">GitHub Repository</a></li>
+          <li><a href="https://akashpriyadarshi.vercel.app" target="_blank" rel="noopener">Developer Portfolio</a></li>
+          <li><a href="https://github.com/AkashPriyadarshii" target="_blank" rel="noopener">Akash Priyadarshi</a></li>
+          <li><a href="https://neet-cbt.vercel.app/" target="_blank" rel="noopener">Direct WebApp URL</a></li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <h4>Links</h4>
-      <ul>
-        <li><a href="#why">Why CBT 2027</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="https://github.com/AkashPriyadarshii/neet-cbt">Source code (GitHub)</a></li>
-      </ul>
+
+    <div class="disclaimer-box">
+      <strong>Disclaimer:</strong> NEET is a registered trademark of the National Testing Agency (NTA). This simulator is an independent educational training utility developed for student exam readiness. It is not affiliated with, endorsed by, or sponsored by the NTA, the National Medical Commission (NMC), or the Ministry of Education, Government of India.
     </div>
-  </div>
-  <div class="wrap disclaimer">
-    NEET is a registered trademark of the National Testing Agency. This project is an independent educational tool and is not affiliated with, endorsed by, or sponsored by the NTA, NMC, or the Government of India. All practice questions and content are provided for educational purposes.
   </div>
 </footer>
 
+<!-- Interactive Widget JavaScript -->
+<script>
+// Lighting Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const themeLabel = document.getElementById('themeLabel');
+const htmlEl = document.documentElement;
+
+themeToggle.addEventListener('click', () => {
+  const currentTheme = htmlEl.getAttribute('data-theme');
+  const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  htmlEl.setAttribute('data-theme', nextTheme);
+  themeLabel.textContent = nextTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+});
+
+// Demo Question Bank
+const sampleQuestions = {
+  physics: {
+    num: "14 of 180",
+    text: "A body of mass 2 kg is projected with initial velocity 20 m/s at an angle of 30° with the horizontal. The kinetic energy of the body at the highest point of its trajectory is:",
+    options: ["100 Joules", "300 Joules", "400 Joules", "200 Joules"],
+    selected: 1
+  },
+  chemistry: {
+    num: "58 of 180",
+    text: "Which of the following compounds exhibits optical isomerism and does not contain an asymmetric carbon atom?",
+    options: ["Lactic acid", "Tartaric acid", "Allene with different terminal substituents", "sec-Butyl alcohol"],
+    selected: 2
+  },
+  botany: {
+    num: "102 of 180",
+    text: "During non-cyclic photophosphorylation, the primary electron acceptor from Photosystem II (PS II) transfers electrons to:",
+    options: ["Plastoquinone", "Ferredoxin", "Cytochrome b6f complex", "Plastocyanin"],
+    selected: 0
+  },
+  zoology: {
+    num: "146 of 180",
+    text: "Juxtaglomerular apparatus (JGA) is a specialized tissue formed by cellular modifications in:",
+    options: ["DCT and Afferent arteriole", "PCT and Efferent arteriole", "Loop of Henle and Vasa recta", "Bowman's capsule and Glomerulus"],
+    selected: 0
+  }
+};
+
+let currentSub = 'physics';
+
+function switchSubject(sub, el) {
+  currentSub = sub;
+  document.querySelectorAll('.sub-tab').forEach(tab => tab.classList.remove('active'));
+  el.classList.add('active');
+
+  const qData = sampleQuestions[sub];
+  document.getElementById('demoQNum').textContent = 'Question ' + qData.num;
+  document.getElementById('demoQText').textContent = qData.text;
+
+  const optsContainer = document.getElementById('demoOptions');
+  optsContainer.innerHTML = '';
+  qData.options.forEach((opt, idx) => {
+    const row = document.createElement('div');
+    row.className = 'option-row' + (idx === qData.selected ? ' selected' : '');
+    row.onclick = () => selectOption(idx, row);
+    row.innerHTML = `<span class="option-indicator">${idx + 1}</span><span>${opt}</span>`;
+    optsContainer.appendChild(row);
+  });
+}
+
+function selectOption(idx, rowEl) {
+  document.querySelectorAll('.option-row').forEach(row => row.classList.remove('selected'));
+  rowEl.classList.add('selected');
+  sampleQuestions[currentSub].selected = idx;
+}
+
+function clearResponse() {
+  document.querySelectorAll('.option-row').forEach(row => row.classList.remove('selected'));
+  sampleQuestions[currentSub].selected = null;
+}
+
+function toggleMarkReview() {
+  const currentCell = document.querySelector('.pal-cell:nth-child(14)');
+  if (currentCell) {
+    if (currentCell.classList.contains('pal-marked')) {
+      currentCell.className = 'pal-cell pal-answered';
+      document.getElementById('paletteStatus').textContent = 'Answered: 9 | Marked: 1';
+    } else {
+      currentCell.className = 'pal-cell pal-marked';
+      document.getElementById('paletteStatus').textContent = 'Answered: 8 | Marked: 2';
+    }
+  }
+}
+
+function nextQuestion() {
+  const subs = ['physics', 'chemistry', 'botany', 'zoology'];
+  const nextIdx = (subs.indexOf(currentSub) + 1) % subs.length;
+  const nextSubTab = document.querySelectorAll('.sub-tab')[nextIdx];
+  switchSubject(subs[nextIdx], nextSubTab);
+}
+
+// Live timer tick simulation
+let seconds = 3 * 3600 + 19 * 60 + 42;
+setInterval(() => {
+  if (seconds > 0) {
+    seconds--;
+    const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    const timerEl = document.getElementById('demoTimer');
+    if (timerEl) timerEl.textContent = `${h}:${m}:${s}`;
+  }
+}, 1000);
+</script>
+
+<!-- Schema.org JSON-LD Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "NEET CBT 2027 Simulator",
   "url": "https://akashpriyadarshii.github.io/neet-cbt-site/",
-  "description": "Free offline NEET 2027 CBT simulator replicating the NTA computer-based test interface — question palette, mark for review, timer, auto-submit, custom question banks.",
+  "description": "Free offline NEET 2027 CBT simulator replicating the official NTA computer-based test interface — question palette, mark for review, timer, auto-submit, custom question banks.",
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  },
   "screenshot": "https://akashpriyadarshii.github.io/neet-cbt-site/testneetscreen.webp",
-  "author": { "@type": "Person", "name": "Akash Priyadarshi" }
+  "author": {
+    "@type": "Person",
+    "name": "Akash Priyadarshi",
+    "url": "https://akashpriyadarshi.vercel.app"
+  }
 }
 </script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Is the NEET CBT simulator free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Completely free and open source (MIT). No account, no ads, no hidden costs — and it works offline after your first visit." } },
-    { "@type": "Question", "name": "Is this the official NTA test?", "acceptedAnswer": { "@type": "Answer", "text": "No. This is an independent, free practice tool that replicates the NTA computer-based test interface. It is not affiliated with or endorsed by the NTA, NMC, or any government body." } },
-    { "@type": "Question", "name": "Does it work on my phone?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It's a progressive web app (PWA). Install it to your home screen and it behaves like a native app. Works on Android, iPhone, and desktop browsers." } },
-    { "@type": "Question", "name": "Can I practice with my own questions?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can import your own question banks, including previous-year questions, in a simple supported format." } },
-    { "@type": "Question", "name": "Does the 2027 NEET really become computer-based?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Following the 2026 paper leaks, the Union Education Ministry confirmed NEET UG will move to a computer-based format from 2027, with randomized questions and multi-shift scheduling." } }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://akashpriyadarshii.github.io/neet-cbt-site/" },
-    { "@type": "ListItem", "position": 2, "name": "NEET CBT 2027 Simulator", "item": "https://neet-cbt.vercel.app/" }
+    {
+      "@type": "Question",
+      "name": "Is the NEET CBT simulator completely free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Completely free and open source under the MIT license. No account, no ads, no paywalls, and works 100% offline."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the official NTA website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. This is an independent open-source practice simulator replicating the NTA computer-based test interface. It is not affiliated with NTA or NMC."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the application work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It is a Progressive Web App (PWA) that caches all questions and interface assets locally in browser IndexedDB storage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is NEET UG transitioning to computer-based testing in 2027?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Following national exam reform recommendations, CBT was adopted to eliminate paper leaks, remove OMR bubbling errors, and provide randomized question sets."
+      }
+    }
   ]
 }
 </script>
